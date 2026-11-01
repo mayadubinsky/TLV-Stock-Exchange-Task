@@ -1,9 +1,12 @@
+@Library('prepareEnv') _
+
 pipeline {
     agent any
     stages {
-        stage('Example') {
+        stage('Get info') {
             steps {
-                sh 'echo hello world'
+                prepareEnv()
+                echo $START_TIME
             }
         }
     }
