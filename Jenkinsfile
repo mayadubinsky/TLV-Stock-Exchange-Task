@@ -6,7 +6,7 @@ pipeline {
         stage('Get info') {
             steps {
                 prepareEnv()
-                echo $START_TIME
+                echo ${env.START_TIME}
             }
         }
     }
