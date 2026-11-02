@@ -24,16 +24,15 @@ pipeline {
                 echo "commit: ${COMMIT_HASH}"       >  build/build-info.txt
                 echo "committer: ${COMMITTER}"      >> build/build-info.txt
                 echo "started: ${START_TIME}"       >> build/build-info.txt
-                cat build/build-info.txt
                 '''
             }
         }
-        stage('pack'){
+        stage('Pack'){
             steps{
                 sh '''
                 ARTIFACT_NAME="git-repo-${BUILD_NUMBER}.tar.gz"
 
-                tar -czf "${ARTIFACT_NAME} -C build"
+                tar -czf "${ARTIFACT_NAME} -C build ."
 
                 echo "--- contents of ${ARTIFACT_NAME} ---"
                 tar -tzf "${ARTIFACT_NAME}"
