@@ -19,7 +19,7 @@ pipeline {
                 rm -rf build
                 mkdir build
 
-                rsync -a --exclude 'build' --exclude '.git' ./ build/
+                rsync -a --exclude 'build' --exclude '.git' --exclude 'artifacts' ./ build/
                 
                 echo "commit: ${COMMIT_HASH}"       >  build/build-info.txt
                 echo "committer: ${COMMITTER}"      >> build/build-info.txt
@@ -43,5 +43,24 @@ pipeline {
                 '''
             }
         }    
+        stage('Upload'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'github-creds', 
+                                usernameVariable: 'GIT_USER',
+                                passwordVariable: 'GIT_TOKEN')]) {
+                    sh '''
+                    mkdir  -p artifacts
+                    mv git-repo-*.tar.gz artifacts/
+
+                    git config user.name "jenkins"
+                    git config user.email "jenkins@local"
+
+                    git add artifacts/
+                    git commit -m "Add artifacts from build ${BUILD_NUMBER}"
+                    git push https://{GIT_USER}:{GIT_TOKEN}@github.com/mayadubinsky/TLV-Stock-Exchange-Task.git HEAD:main
+                    '''
+                }
+            }
+        }
     }
 }
