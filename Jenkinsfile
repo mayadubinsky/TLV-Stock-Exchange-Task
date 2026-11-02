@@ -12,13 +12,19 @@ pipeline {
             steps {
                 prepareEnv()
 
+        stage('Build') {
+                sh '''
                 rm -rf build
-                mkdir -p build
+                mkdir build
+
+                rsync -a --exclude 'build' --exclude '.git' ./ build/
                 
                 echo "commit: ${COMMIT_HASH}"       >  build/build-info.txt
                 echo "committer: ${COMMITTER}"      >> build/build-info.txt
                 echo "started: ${START_TIME}"       >> build/build-info.txt
-                echo build /build-info.txt
+                echo build/build-info.txt
+                '''
+        }
             }
         }
     }
