@@ -5,13 +5,14 @@ pipeline {
 
     triggers {
         githubPush()
-        echo '$(commitHash)'
     }
     
     stages {
         stage('Get info') {
             steps {
                 prepareEnv()
+                echo '$(commitHash)'
+
             }
         }
     }
