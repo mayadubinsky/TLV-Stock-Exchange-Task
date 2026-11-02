@@ -2,7 +2,7 @@
 def call() {
 
   // get the start time and the commit hash
-  def startTime = new Date(currentBuild.startTimeInMillis).format('dd-MM-yyyy HH:mm:ss')
+  def startTime = new Date(currentBuild.startTimeInMillis).format('dd-MM-yyyy HH:mm:ss z', TimeZone.getTimeZone('Asia/Jerusalem'))
   def commitHash = env.GIT_COMMIT
 
   // get the committer name and save the name
