@@ -11,7 +11,7 @@ pipeline {
         stage('Get info') {
             steps {
                 prepareEnv()
-                echo '${commitHash}'
+                echo '${env.commitHash}'
 
             }
         }
