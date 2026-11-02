@@ -5,6 +5,7 @@ pipeline {
 
     triggers {
         githubPush()
+        echo '$(commitHash)'
     }
     
     stages {
