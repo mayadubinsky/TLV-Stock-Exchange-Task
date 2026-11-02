@@ -56,7 +56,7 @@ pipeline {
                     git config user.email "jenkins@local"
 
                     git add artifacts/
-                    git commit -m "Add artifacts from build ${BUILD_NUMBER}" [ci skip]
+                    git commit -m "Add artifacts from build ${BUILD_NUMBER} [ci skip]"
                     git push https://${GIT_USER}:${GIT_TOKEN}@github.com/mayadubinsky/TLV-Stock-Exchange-Task.git HEAD:main
                     '''
                 }
