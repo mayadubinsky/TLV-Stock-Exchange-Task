@@ -62,5 +62,16 @@ pipeline {
                 }
             }
         }
+        stage('Skip own commits') {
+            steps {
+                script {
+                    def author = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                    if (author == 'jenkins') {
+                        currentBuild.result = 'ABORTED'
+                        error('Last commit was made by Jenkins, stopping to avoid a loop')
+                    }
+                }
+            }
+        }
     }
 }
