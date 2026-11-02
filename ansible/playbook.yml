@@ -1,0 +1,4 @@
+---
+- name: Deploy Docker Compose Application
+  hosts: localhost
+  

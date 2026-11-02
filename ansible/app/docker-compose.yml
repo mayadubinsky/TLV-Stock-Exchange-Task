@@ -1,0 +1,20 @@
+services:
+  web:
+    build: ./web
+    ports: 
+      - 8081:80
+    environment:
+      - REDIS_HOST=db
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+
