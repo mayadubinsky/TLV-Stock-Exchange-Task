@@ -6,7 +6,7 @@ pipeline {
     triggers {
         githubPush()
     }
-    
+
     stages {
         stage('Get info') {
             steps {
