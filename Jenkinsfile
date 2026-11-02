@@ -8,6 +8,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Check skip') {
+            steps {
+                scmSkip(deleteBuild: true, skipPattern: '.*\\[ci skip\\].*')
+            }
+        }
+        
         stage('Get info') {
             steps {
                 prepareEnv()
