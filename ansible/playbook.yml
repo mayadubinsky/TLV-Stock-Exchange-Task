@@ -1,4 +1,73 @@
 ---
-- name: Deploy Docker Compose Application
+- name: Deploy Hello Application
   hosts: localhost
-  
+  become: true
+
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+        update_cache: true
+
+    - name: Create directory for repository signing keys
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Download Docker repository signing key
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+
+    - name: Get system package architecture
+      command: dpkg --print-architecture
+      register: docker_architecture
+      changed_when: false
+
+    - name: Configure Docker repository
+      copy:
+        dest: /etc/apt/sources.list.d/docker.sources
+        mode: "0644"
+        content: |
+          Types: deb
+          URIs: https://download.docker.com/linux/ubuntu
+          Suites: {{ ansible_facts['distribution_release'] }}
+          Components: stable
+          Architectures: {{ docker_architecture.stdout }}
+          Signed-By: /etc/apt/keyrings/docker.asc
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Ensure Docker is running and enabled
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: copy application files
+      copy:
+        src: "{{ playbook_dir }}/app/"
+        dest: /opt/hello-app
+        owner: root
+        group: root
+        mode: preserve
+ 
+    - name: Build and start the application
+      community.docker.docker_compose_v2:
+        project_src: /opt/hello-app
+        state: present
+        build: always
