@@ -11,7 +11,7 @@ pipeline {
         stage('Get info') {
             steps {
                 prepareEnv()
-
+            }
         stage('Build') {
                 sh '''
                 rm -rf build
@@ -24,7 +24,6 @@ pipeline {
                 echo "started: ${START_TIME}"       >> build/build-info.txt
                 echo build/build-info.txt
                 '''
-        }
             }
         }
     }
