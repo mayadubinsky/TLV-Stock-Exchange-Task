@@ -46,7 +46,7 @@ pipeline {
         stage('Upload'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'github-creds', 
-                                usernameVariable: 'GIT_USER',
+                                usernameVariable: 'mayadubinsky',
                                 passwordVariable: 'GIT_TOKEN')]) {
                     sh '''
                     mkdir  -p artifacts
