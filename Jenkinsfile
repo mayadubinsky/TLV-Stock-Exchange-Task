@@ -12,7 +12,9 @@ pipeline {
             steps {
                 prepareEnv()
             }
+        }
         stage('Build') {
+            steps {
                 sh '''
                 rm -rf build
                 mkdir build
