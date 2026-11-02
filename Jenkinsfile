@@ -46,7 +46,7 @@ pipeline {
         stage('Upload'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'github-creds', 
-                                usernameVariable: 'mayadubinsky',
+                                usernameVariable: 'GIT_USER',
                                 passwordVariable: 'GIT_TOKEN')]) {
                     sh '''
                     mkdir  -p artifacts
@@ -57,7 +57,7 @@ pipeline {
 
                     git add artifacts/
                     git commit -m "Add artifacts from build ${BUILD_NUMBER}"
-                    git push https://{GIT_USER}:{GIT_TOKEN}@github.com/mayadubinsky/TLV-Stock-Exchange-Task.git HEAD:main
+                    git push https://${GIT_USER}:${GIT_TOKEN}@github.com/mayadubinsky/TLV-Stock-Exchange-Task.git HEAD:main
                     '''
                 }
             }
