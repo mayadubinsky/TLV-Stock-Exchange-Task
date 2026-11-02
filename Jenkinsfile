@@ -32,6 +32,10 @@ pipeline {
                 sh '''
                 ARTIFACT_NAME="git-repo-${BUILD_NUMBER}.tar.gz"
 
+                pwd
+                ls -la
+                ls -la build
+
                 tar -czf "${ARTIFACT_NAME} -C build ."
 
                 echo "--- contents of ${ARTIFACT_NAME} ---"
