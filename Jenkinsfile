@@ -36,7 +36,7 @@ pipeline {
                 ls -la
                 ls -la build
 
-                tar -czf "${ARTIFACT_NAME} -C build ."
+                tar -czf "${ARTIFACT_NAME}" -C build .
 
                 echo "--- contents of ${ARTIFACT_NAME} ---"
                 tar -tzf "${ARTIFACT_NAME}"
