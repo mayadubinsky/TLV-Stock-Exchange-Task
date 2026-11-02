@@ -3,7 +3,7 @@ def call() {
 
   // get the start time and the run hash from git
   def startTime = new Date(currentBuild.startTimeInMillis).format('dd-MM-yyyy HH:mm:ss')
-  def commitCode = env.GIT_COMMIT
+  def commitHash = env.GIT_COMMIT
 
   // get the committer name and save the name
   def triggeredBy = sh(
@@ -13,8 +13,6 @@ def call() {
 
  // save the parameters as variables          
   env.START_TIME = startTime
-  env.COMMITCODE = commitCode
+  env.COMMITHASH = commitHash
   env.TRIGGERED_BY = triggeredBy
-  
-return "The trigger was made by ${triggeredBy}. The start time of the run was ${startTime} and the commit code is ${commitCode}"
-}
+  }
