@@ -1,18 +1,18 @@
-// This functions return parameters about the SCM trigger
+// This function returns parameters about the SCM trigger
 def call() {
 
-  // get the start time and the run hash from git
+  // get the start time and the commit hash
   def startTime = new Date(currentBuild.startTimeInMillis).format('dd-MM-yyyy HH:mm:ss')
   def commitHash = env.GIT_COMMIT
 
   // get the committer name and save the name
   def triggeredBy = sh(
-              script: "git log -1 --pretty=format:'%an'",
+              script: "git log -1 --pretty=format:'%cn'",
               returnStdout: true
           ).trim()
 
- // save the parameters as variables          
+ // save the values as environment variables for the next stagess          
   env.START_TIME = startTime
   env.COMMIT_HASH = commitHash
-  env.COMMITER = triggeredBy
+  env.COMMITTER = triggeredBy
   }
