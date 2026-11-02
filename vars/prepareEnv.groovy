@@ -14,5 +14,5 @@ def call() {
  // save the parameters as variables          
   env.START_TIME = startTime
   env.COMMIT_HASH = commitHash
-  env.TRIGGERED_BY = triggeredBy
+  env.COMMITER = triggeredBy
   }
