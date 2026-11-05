@@ -1,2 +1,0 @@
-# TLV-Stock-Exchange-Task
-
